@@ -35,7 +35,7 @@ x = a
 a = b
 b = x
 
-print('a: ' + a + ', b: ' + b)
+print('a: {}, b: {}'.format(a, b))
 print('')
 
 print('Через арифметические действия: ')
@@ -46,7 +46,7 @@ a = a + b
 b = a - b
 a = a - b
 
-print('a: ' + str(a) + ', b: ' + str(b))
+print('a: {}, b: {}'.format(a, b))
 print('')
 
 # Задача-3: Запросите у пользователя его возраст.
