@@ -26,41 +26,48 @@ date = '01.22.1001'
 date = '1.12.1001'
 date = '-2.10.3001'
 
-
-z2_day = 0
-z2_month = 0
-z2_year = 0
+z2_result = False
 daysinmonth = 0
 
-z2_badnum = 'Ошибка в значении:'
+z2_day, z2_month, z2_year = input('Введите дату в формате dd.mm.yyyy: ').split('.')
 
-z2_dateinp = input('Введите дату в формате dd.mm.yyyy: ').split('.')
+try:
+    int(z2_day)
+    int(z2_month)
+    int(z2_year)
+    z2_result = True
+except ValueError:
+    z2_result = False
 
-for z2_unit1 in z2_dateinp:
-    try:
-        int(z2_unit1)
-    except ValueError:
-        print(z2_badnum, z2_unit1)
+if (len(z2_day) == 2
+        and len(z2_month) == 2
+        and len(z2_year) == 4
+        and z2_result == True):
+    z2_result = True
+else:
+    z2_result = False
 
-z2_day = int(z2_dateinp[0])
-z2_month = int(z2_dateinp[1])
-z2_year = int(z2_dateinp[2])
+z2_day = int(z2_day)
+z2_month = int(z2_month)
+z2_year = int(z2_year)
 
 if z2_month % 2 == 0:
     daysinmonth = 30
-else:
+elif z2_month % 2 > 0:
     daysinmonth = 31
 
 if (1 <= z2_day <= daysinmonth
-    and len(str(z2_day)) == 2
-    and 1 <= z2_month <= 12
-    and len(str(z2_month)) == 2
-    and 1 <= z2_year <= 9999
-    and len(str(z2_year)) == 4):
-    print('Ошибок не обнаружено!')
+        and 1 <= z2_month <= 12
+        and 1 <= z2_year <= 9999
+        and z2_result == True):
+    z2_result = True
 else:
-    print('Введена некорректная дата')
+    z2_result = False
 
+if z2_result:
+    print('Ошибок в дате не обнаружено.')
+else:
+    print('Введена некорректная дата.')
 
 # Задание-3: "Перевёрнутая башня" (Задача олимпиадного уровня)
 #
