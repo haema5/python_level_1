@@ -1,7 +1,5 @@
 __author__ = 'Пашков Игорь Владимирович'
 
-import random
-
 # Задача-1:
 # Дан список фруктов.
 # Напишите программу, выводящую фрукты в виде нумерованного списка,
@@ -19,20 +17,22 @@ import random
 print('Задача 1')
 print('')
 
-list_0 = ["яблоко", "банан", "киви", "арбуз"]
+z1_list1 = ["яблоко", "банан", "киви", "арбуз"]
 
 print('С помощью while:')
-i = 0
-while i < len(list_0):
-    print('{}. {}'.format(i + 1, list_0[i]))
-    i += 1
+
+z1_count1 = 0
+while z1_count1 < len(z1_list1):
+    print('{}. {}'.format(z1_count1 + 1, z1_list1[z1_count1]))
+    z1_count1 += 1
 
 print('')
 print('С помощью for:')
-x = 0
-for i in list_0:
-    x += 1
-    print('{}. {}'.format(x, i))
+
+z1_count2 = 0
+for z1_unit1 in z1_list1:
+    z1_count2 += 1
+    print('{}. {}'.format(z1_count2, z1_unit1))
 
 print('')
 
@@ -42,25 +42,24 @@ print('')
 print('Задача 2')
 print('')
 
-list_1 = ["яблоко", "банан", "киви", "арбуз", "арбуз"]
-list_2 = ["томат", "киви", "баклажан", "арбуз"]
+z2_list1 = ["яблоко", "банан", "киви", "арбуз", "арбуз"]
+z2_list2 = ["томат", "киви", "баклажан", "арбуз"]
 
-print('Первый список:', list_1)
-print('Второй список:', list_2)
+print('Первый список:', z2_list1)
+print('Второй список:', z2_list2)
 print('')
 
-x = 0
-y = 0
+z2_count1 = 0
 
-for x in range(len(list_2)):
-    while y < len(list_1):
-        if list_1[y] == list_2[x]:
-            del list_1[y]
-            y -= 1
-        y += 1
-    y = 0
+for z2_unit1 in range(len(z2_list2)):
+    while z2_count1 < len(z2_list1):
+        if z2_list1[z2_count1] == z2_list2[z2_unit1]:
+            del z2_list1[z2_count1]
+            z2_count1 -= 1
+        z2_count1 += 1
+    z2_count1 = 0
 
-print('Отредактированный список:', list_1)
+print('Отредактированный список:', z2_list1)
 
 # Задача-3:
 # Дан произвольный список из целых чисел.
@@ -71,15 +70,15 @@ print('')
 print('Задача 3')
 print('')
 
-list_3 = [3, 5, 1, 2, 4, 6, 3, 2, 3, 4]
-list_4 = []
+z3_list1 = [3, 5, 1, 2, 4, 6, 3, 2, 3, 4]
+z3_list2 = []
 
-print('Исходный список:', list_3)
+print('Исходный список:', z3_list1)
 
-for x in list_3:
-    if x % 2:
-        list_4.append(list_3[x] * 2)
+for z3_unit1 in z3_list1:
+    if z3_unit1 % 2:
+        z3_list2.append(z3_list1[z3_unit1] * 2)
     else:
-        list_4.append(list_3[x] / 4)
+        z3_list2.append(z3_list1[z3_unit1] / 4)
 
-print('Новый список:', list_4)
+print('Новый список:', z3_list2)

@@ -16,9 +16,9 @@ import math
 z1_list1 = [2, -5, 8, 9, -25, 25, 4]
 z1_list2 = []
 
-for x in z1_list1:
-    if x > 0 and math.sqrt(x).is_integer():
-        z1_list2.append(int(math.sqrt(x)))
+for z1_unit1 in z1_list1:
+    if z1_unit1 > 0 and math.sqrt(z1_unit1).is_integer():
+        z1_list2.append(int(math.sqrt(z1_unit1)))
 print(z1_list2)
 
 # Задача-2: Дана дата в формате dd.mm.yyyy, например: 02.11.2013.
@@ -79,8 +79,8 @@ Months = {
 }
 
 try:
-    date = input('Введите дату в формате dd.mm.yyyy: ').split('.')
-    print(Days[date[0]] + ' ' + Months[date[1]] + ' ' + date[2] + ' ' + 'года')
+    z2_inputdate = input('Введите дату в формате dd.mm.yyyy: ').split('.')
+    print(Days[z2_inputdate[0]] + ' ' + Months[z2_inputdate[1]] + ' ' + z2_inputdate[2] + ' ' + 'года')
 except:
     print('Дата введена некорректно!')
 
@@ -88,16 +88,21 @@ except:
 # в диапазоне от -100 до 100. В списке должно быть n - элементов.
 # Подсказка:
 # для получения случайного числа используйте функцию randint() модуля random
+
+print('')
+print('Задача 3')
+print('')
+
 import random
 
 z3_list1 = []
 n = input('Введите количество элементов списка: ')
 
-i = 0
-while i < int(n):
+z3_count1 = 0
+while z3_count1 < int(n):
     z3_list1.append(random.randint(-100, 100))
-    i += 1
-print(z3_list1)
+    z3_count1 += 1
+print('Список с произвольными целыми числами: ', z3_list1)
 
 # Задача-4: Дан список, заполненный произвольными целыми числами.
 # Получите новый список, элементами которого будут:
@@ -106,18 +111,22 @@ print(z3_list1)
 # б) элементы исходного списка, которые не имеют повторений:
 # например, lst = [1 , 2, 4, 5, 6, 2, 5, 2], нужно получить lst2 = [1, 4, 6]
 
-z4_list1 = [1, 2, 4, 5, 6, 2, 5, 2]
+print('')
+print('Задача 4')
+print('')
 
+z4_list1 = [1, 2, 4, 5, 6, 2, 5, 2]
+print('Исходный список:', z4_list1)
+
+# a)
 z4_list2 = list(set(z4_list1))
 print('Неповторяющиеся элементы:', z4_list2)
 
-######################
-
+# б)
 z4_list3 = []
-
-for b in z4_list1:
-    z4_count = z4_list1.count(b)
+for z4_unit1 in z4_list1:
+    z4_count = z4_list1.count(z4_unit1)
     if z4_count == 1:
-            z4_list3.append(b)
+            z4_list3.append(z4_unit1)
 
 print('Элементы, которые не имеют повторений:', z4_list3)
