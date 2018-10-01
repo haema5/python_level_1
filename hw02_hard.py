@@ -19,15 +19,17 @@ x = 2.5
 #  (т.е. 2 символа для дня, 2 - для месяца, 4 - для года)
 
 # Пример корректной даты
-date = '01.11.1985'
+# date = '01.11.1985'
 
 # Примеры некорректных дат
-date = '01.22.1001'
-date = '1.12.1001'
-date = '-2.10.3001'
+# date = '01.22.1001'
+# date = '1.12.1001'
+# date = '-2.10.3001'
+
+import calendar
 
 z2_result = False
-daysinmonth = 0
+days_in_month = 0
 
 z2_day, z2_month, z2_year = input('Введите дату в формате dd.mm.yyyy: ').split('.')
 
@@ -51,12 +53,8 @@ z2_day = int(z2_day)
 z2_month = int(z2_month)
 z2_year = int(z2_year)
 
-if z2_month % 2 == 0:
-    daysinmonth = 30
-elif z2_month % 2 > 0:
-    daysinmonth = 31
-
-if (1 <= z2_day <= daysinmonth
+days_in_month = calendar.monthrange(z2_year, z2_month)[1]
+if (1 <= z2_day <= days_in_month
         and 1 <= z2_month <= 12
         and 1 <= z2_year <= 9999
         and z2_result == True):
