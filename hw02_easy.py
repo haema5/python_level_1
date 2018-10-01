@@ -21,13 +21,14 @@ print('')
 
 list_0 = ["яблоко", "банан", "киви", "арбуз"]
 
-print('С помощью while:'
-      '')
+print('С помощью while:')
 i = 0
 while i < len(list_0):
     print('{}. {}'.format(i + 1, list_0[i]))
     i += 1
 
+print('')
+print('С помощью for:')
 x = 0
 for i in list_0:
     x += 1
