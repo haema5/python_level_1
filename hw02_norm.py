@@ -29,7 +29,7 @@ print('')
 print('Задача 2')
 print('')
 
-Days = {
+z2_days = {
     '01': 'первое',
     '02': 'второе',
     '03': 'третье',
@@ -63,7 +63,7 @@ Days = {
     '31': 'тридцать первое'
 }
 
-Months = {
+z2_months = {
     '01': 'января',
     '02': 'февраля',
     '03': 'марта',
@@ -80,7 +80,7 @@ Months = {
 
 try:
     z2_inputdate = input('Введите дату в формате dd.mm.yyyy: ').split('.')
-    print(Days[z2_inputdate[0]] + ' ' + Months[z2_inputdate[1]] + ' ' + z2_inputdate[2] + ' ' + 'года')
+    print(z2_days[z2_inputdate[0]] + ' ' + z2_months[z2_inputdate[1]] + ' ' + z2_inputdate[2] + ' ' + 'года')
 except:
     print('Дата введена некорректно!')
 
