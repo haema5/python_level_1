@@ -8,7 +8,6 @@ x = 2.5
 # вычислите и выведите y
 
 
-
 # Задание-2: Дата задана в виде строки формата 'dd.mm.yyyy'.
 # Проверить, корректно ли введена дата.
 # Условия корректности:
@@ -26,6 +25,41 @@ date = '01.11.1985'
 date = '01.22.1001'
 date = '1.12.1001'
 date = '-2.10.3001'
+
+
+z2_day = 0
+z2_month = 0
+z2_year = 0
+daysinmonth = 0
+
+z2_badnum = 'Ошибка в значении:'
+
+z2_dateinp = input('Введите дату в формате dd.mm.yyyy: ').split('.')
+
+for z2_unit1 in z2_dateinp:
+    try:
+        int(z2_unit1)
+    except ValueError:
+        print(z2_badnum, z2_unit1)
+
+z2_day = int(z2_dateinp[0])
+z2_month = int(z2_dateinp[1])
+z2_year = int(z2_dateinp[2])
+
+if z2_month % 2 == 0:
+    daysinmonth = 30
+else:
+    daysinmonth = 31
+
+if (1 <= z2_day <= daysinmonth
+    and len(str(z2_day)) == 2
+    and 1 <= z2_month <= 12
+    and len(str(z2_month)) == 2
+    and 1 <= z2_year <= 9999
+    and len(str(z2_year)) == 4):
+    print('Ошибок не обнаружено!')
+else:
+    print('Введена некорректная дата')
 
 
 # Задание-3: "Перевёрнутая башня" (Задача олимпиадного уровня)
