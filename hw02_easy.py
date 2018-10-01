@@ -38,14 +38,16 @@ print('')
 x = 0
 y = 0
 
-for x in range(len(list_1)):
-    for y in range(len(list_2)):
-        li1 = list_1[x]
-        li2 = list_2[y]
-        if li1 == li2:
-            del list_1[x]
+for x in range(len(list_2)):
+    while y < len(list_1):
+        if list_1[y] == list_2[x]:
+            del(list_1[y])
+            y -= 1
+        y += 1
+    y = 0
 
-print(list_1)
+print('Новый первый список:', list_1)
+
 # Задача-3:
 # Дан произвольный список из целых чисел.
 # Получите НОВЫЙ список из элементов исходного, выполнив следующие условия:
