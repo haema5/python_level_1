@@ -31,6 +31,7 @@ import calendar
 z2_result = False
 days_in_month = 0
 
+
 z2_day, z2_month, z2_year = input('Введите дату в формате dd.mm.yyyy: ').split('.')
 
 try:
@@ -49,11 +50,19 @@ if (len(z2_day) == 2
 else:
     z2_result = False
 
-z2_day = int(z2_day)
-z2_month = int(z2_month)
-z2_year = int(z2_year)
+if z2_result:
+    z2_day = int(z2_day)
+    z2_month = int(z2_month)
+    z2_year = int(z2_year)
 
-days_in_month = calendar.monthrange(z2_year, z2_month)[1]
+    days_in_month = calendar.monthrange(z2_year, z2_month)[1]
+    z2_result = True
+else:
+    z2_day = 0
+    z2_month = 0
+    z2_year = 0
+    z2_result = False
+
 if (1 <= z2_day <= days_in_month
         and 1 <= z2_month <= 12
         and 1 <= z2_year <= 9999
