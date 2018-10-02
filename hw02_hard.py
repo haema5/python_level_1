@@ -7,6 +7,11 @@ equation = 'y = -12x + 11111140.2121'
 x = 2.5
 # вычислите и выведите y
 
+equation = equation.split(' ')
+z1_unit1 = float(equation[2].split('x')[0])
+z1_unit2 = float(equation[4])
+
+print('y =', z1_unit1 * x + z1_unit2)
 
 # Задание-2: Дата задана в виде строки формата 'dd.mm.yyyy'.
 # Проверить, корректно ли введена дата.
@@ -30,7 +35,6 @@ import calendar
 
 z2_result = False
 days_in_month = 0
-
 
 z2_day, z2_month, z2_year = input('Введите дату в формате dd.mm.yyyy: ').split('.')
 
