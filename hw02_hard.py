@@ -7,6 +7,10 @@ equation = 'y = -12x + 11111140.2121'
 x = 2.5
 # вычислите и выведите y
 
+print('')
+print('Задача 1')
+print('')
+
 equation = equation.split(' ')
 z1_unit1 = float(equation[2].split('x')[0])
 z1_unit2 = float(equation[4])
@@ -30,6 +34,10 @@ print('y =', z1_unit1 * x + z1_unit2)
 # date = '01.22.1001'
 # date = '1.12.1001'
 # date = '-2.10.3001'
+
+print('')
+print('Задача 2')
+print('')
 
 import calendar
 
@@ -109,3 +117,30 @@ else:
 #
 # Вход: 11
 # Выход: 5 3
+
+print('')
+print('Задача 3')
+print('')
+
+z3_square = 0
+z3_pos = 0
+z3_floor = 0
+z3_onfl = 1
+z3_flin = 1
+
+z3_room = int(input('Введите номер комнаты: '))
+
+while z3_pos < z3_room:
+    z3_square += 1
+    z3_pos += z3_square ** 2
+    z3_floor += z3_square - 1
+
+z3_min = z3_pos - z3_square ** 2 + 1
+while z3_min < z3_room:
+    z3_onfl += 1
+    if z3_onfl > z3_square:
+        z3_onfl = 1
+        z3_flin += 1
+    z3_min += 1
+
+print('Этаж: {}, позиция: {}.'.format(z3_flin + z3_floor, z3_onfl))
