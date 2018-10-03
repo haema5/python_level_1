@@ -46,23 +46,24 @@ print()
 print('Задание-3:')
 
 
-def func(x):
+def posi(x):
     if x > 0:
         return True
     else:
         return False
 
 
-def filter_2(func, arg):
-    fil_lst = []
-    for i in arg:
-        if func(i) == False:
-            fil_lst.append(i)
-    return fil_lst
+def filter_2(func_name, sequence):
+    filter_seq = []
+    for i in sequence:
+        if func_name(i):
+            filter_seq.append(i)
+    return filter_seq
 
 
 lst = [2, 10, -12, 2.5, 20, -11, 4, 4, 0]
-lst = filter(func, lst)
+
+lst = filter(posi, lst)
 lst = list(lst)
 
 print(lst)
