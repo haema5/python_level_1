@@ -46,24 +46,24 @@ print()
 print('Задание-3:')
 
 
-def posi(x):
+def my_filter(function_name, sequence):
+    filter_sequence = []
+    for i in sequence:
+        if function_name(i):
+            filter_sequence.append(i)
+    return filter_sequence
+
+
+def positive(x):
     if x > 0:
         return True
     else:
         return False
 
 
-def filter_2(func_name, sequence):
-    filter_seq = []
-    for i in sequence:
-        if func_name(i):
-            filter_seq.append(i)
-    return filter_seq
-
-
 lst = [2, 10, -12, 2.5, 20, -11, 4, 4, 0]
 
-lst = filter(posi, lst)
+lst = my_filter(positive, lst)
 lst = list(lst)
 
 print(lst)
@@ -71,3 +71,4 @@ print(lst)
 # Задача-4:
 # Даны четыре точки А1(х1, у1), А2(x2 ,у2), А3(x3 , у3), А4(х4, у4).
 # Определить, будут ли они вершинами параллелограмма.
+
