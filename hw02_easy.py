@@ -16,14 +16,16 @@ __author__ = 'Пашков Игорь Владимирович'
 # Подсказка: воспользоваться методом .format()
 print('Задача 1')
 print('')
-
+rvn = 0
 z1_list1 = ["яблоко", "банан", "киви", "арбуз"]
 
 print('С помощью while:')
 
 z1_count1 = 0
 while z1_count1 < len(z1_list1):
-    print('{}. {}'.format(z1_count1 + 1, z1_list1[z1_count1]))
+    rvn = 10 - len(z1_list1[z1_count1])
+    print(str(z1_count1 + 1) + '.' + ' ' * rvn + z1_list1[z1_count1])
+    # print('{}. {}'.format(z1_count1 + 1, z1_list1[z1_count1]))
     z1_count1 += 1
 
 print('')
@@ -32,7 +34,9 @@ print('С помощью for:')
 z1_count2 = 0
 for z1_unit1 in z1_list1:
     z1_count2 += 1
-    print('{}. {}'.format(z1_count2, z1_unit1))
+    rvn = 10 - len(z1_unit1)
+    print(str(z1_count2) + '.' + ' ' * rvn + z1_unit1)
+    # print('{}. {}'.format(z1_count2, z1_unit1))
 
 print('')
 
