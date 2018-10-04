@@ -72,17 +72,12 @@ print(lst)
 # Определить, будут ли они вершинами параллелограмма.
 print()
 print('Задание-4:')
+import math
 
 
-def compare(list):
-    triger_com = 0
-    count = 1
-    while count < len(list):
-        for i in range(len(list) - count):
-            if list[i] == list[i + 1]:
-                triger_com += 1
-        count += 1
-    return triger_com
+def length(a, b):
+    length = math.sqrt(math.fabs(((b[1] - a[1]) ** 2) + ((b[0] - a[0]) ** 2)))
+    return length
 
 
 a1 = [1, 1]
@@ -90,17 +85,13 @@ a2 = [2, 3]
 a3 = [7, 3]
 a4 = [6, 1]
 
-figure = [a1, a2, a3, a4]
-print(figure)
+a1a2 = length(a1, a2)
+a3a4 = length(a3, a4)
+a2a3 = length(a2, a3)
+a1a4 = length(a1, a4)
 
-x_list = []
-y_list = []
-for i in figure:
-    x_list.append(i[0])
-    y_list.append(i[1])
-print(x_list, y_list)
-
-triger_x = compare(x_list)
-triger_y = compare(y_list)
-
-print('yoyoyoyoy', triger_x, triger_y)
+# a1a2=a3a4, a2a3=a1a4
+if a1a2 == a3a4 and a2a3 == a1a4:
+    print('Даны вершины параллелограмма')
+else:
+    print('Даны не вершины параллелограмма')
