@@ -36,7 +36,6 @@ def sort_to_max(origin_list):
     return origin_list
 
 
-print('Исходный список:', [2, 10, -12, 2.5, 20, -11, 4, 4, 0])
 print('Отсортированный список:', sort_to_max([2, 10, -12, 2.5, 20, -11, 4, 4, 0]))
 
 # Задача-3:
@@ -71,4 +70,37 @@ print(lst)
 # Задача-4:
 # Даны четыре точки А1(х1, у1), А2(x2 ,у2), А3(x3 , у3), А4(х4, у4).
 # Определить, будут ли они вершинами параллелограмма.
+print()
+print('Задание-4:')
 
+
+def compare(list):
+    triger_com = 0
+    count = 1
+    while count < len(list):
+        for i in range(len(list) - count):
+            if list[i] == list[i + 1]:
+                triger_com += 1
+        count += 1
+    return triger_com
+
+
+a1 = [1, 1]
+a2 = [2, 3]
+a3 = [7, 3]
+a4 = [6, 1]
+
+figure = [a1, a2, a3, a4]
+print(figure)
+
+x_list = []
+y_list = []
+for i in figure:
+    x_list.append(i[0])
+    y_list.append(i[1])
+print(x_list, y_list)
+
+triger_x = compare(x_list)
+triger_y = compare(y_list)
+
+print('yoyoyoyoy', triger_x, triger_y)
