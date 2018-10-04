@@ -8,35 +8,32 @@
 # Вывод: 1 17/42  (результат обязательно упростить и выделить целую часть)
 # Ввод: -2/3 - -2
 # Вывод: 1 1/3
+
 import math
+import fractions
 
 
-def oper(x):
-    x = x.split(' ')
-    for i in x:
-        if i == '+' or i == '-' or i == '*' or i == '/' or i == '**':
-            # result = ' ' + i + ' '
-            result = i
+def operation_type(expression):
+    expression = expression.split(' ')
+    for type in expression:
+        if type == '+' or type == '-':  # or type == '*' or type == '/' or type == '**':
+            result = ' ' + type + ' '
             break
         else:
             result = False
     return result
 
 
-def do_that(a, b, s):
-    if s == '+':
-        result = a + b
-    elif s == '-':
-        result = a - b
-    elif s == '*':
-        result = a * b
-    elif s == '/':
-        result = a / b
-    elif s == '**':
-        result = a ** b
-    return result
+def decomposition(expression):
+    expression = expression.split(operation_type(expression))
 
-def wo_wh(drob):
+    a_fraction = expression[0].split(' ')
+    b_fraction = expression[1].split(' ')
+
+    return (a_fraction, b_fraction)
+
+
+def solve_it(expression):
     def is_int(x):
         try:
             int(x)
@@ -44,82 +41,85 @@ def wo_wh(drob):
         except ValueError:
             return False
 
-    if len(drob) > 1:
-        drob_cz = drob[1].split('/')
-        if drob[0][0] == '-':
-            result = '-' + (str(math.fabs(int(drob[0])) * int(drob_cz[1]) + int(drob_cz[0])) + '/' + drob_cz[1])
+    def add_null(fraction):
+        while len(fraction) < 2:
+            if is_int(fraction[0]):
+                fraction.append('')
+            else:
+                fraction.insert(0, '')
+        return fraction
+
+    def reduce_frac(n, m):
+        x = math.gcd(n, m)
+        return (n // x, m // x)
+
+    def summ(a, b):
+        summ = a + b
+        return summ
+
+    def razn(a, b):
+        razn = a - b
+        return razn
+
+    def frac_summ(a, b, c, d):
+        x = a * d + b * c
+        y = b * d
+        z = math.gcd(x, y)
+        return (x // z, y // z)
+
+    def frac_razn(a, b, c, d):
+        x = a * d - b * c
+        y = b * d
+        z = math.gcd(x, y)
+        return (x // z, y // z)
+
+    a_fraction, b_fraction = decomposition(expression)
+
+    a_fraction = add_null(a_fraction)
+    b_fraction = add_null(b_fraction)
+
+    print('a_fraction {}, b_fraction {}, syml {}'.format(a_fraction, b_fraction, operation_type(expression)))
+    print(operation_type(expression))
+    dt = [a_fraction[0], b_fraction[0]]
+    pt = [a_fraction[1], b_fraction[1]]
+    if operation_type(expression) == ' + ':
+        # вычисление целой части
+        if is_int(dt[0]) and is_int(dt[1]):
+            dt = summ(int(dt[0]), int(dt[1]))
+        elif is_int(dt[0]):
+            dt = int(dt[0])
+        elif is_int(dt[1]):
+            dt = int(dt[1])
         else:
-            result = str(int(drob[0]) * int(drob_cz[1]) + int(drob_cz[0])) + '/' + drob_cz[1]
-        result = float(result.split('/')[0]) / float(result.split('/')[1])
-    else:
-        if is_int(drob[0]):
-            result = float(drob[0])
+            dt = 0
+
+        # вычисление дробной части
+        if a_fraction[1] != '' and b_fraction[1] != '':
+            pt = fractions.Fraction(a_fraction[1]) + fractions.Fraction(b_fraction[1])
+        elif a_fraction[1] == '':
+            pt = b_fraction[1]
+        elif b_fraction[1] == '':
+            pt = a_fraction[1]
         else:
-            drob_cz = drob[0].split('/')
-            result = str(int(drob_cz[0]) / int(drob_cz[1]))
-            result = float(result)
-    return result
+            pt = ''
+
+    elif operation_type(expression) == ' - ':
+        dt = razn(int(dt[0]), int(dt[1]))
+
+    if is_int(pt):
+        dt = dt + pt
+        pt = ''
+
+    print('{} {}'.format(dt, pt))
+    return ('{} {}'.format(dt, pt))
 
 
-def reduce_frac(n, m):
-    x = math.gcd(n, m)
-    return (n // x, m // x)
+#expression = '1 2/3 + 2 1/3'
+expression = '5/6 + 4/7'
 
-def add(a,b,c,d):
-    x = a*d + b*c
-    y = b*d
-    z = math.gcd(x, y)
-    return (x//z, y//z)
+print(solve_it(expression))
+# print(solve_it(expression))\
 
-print('ADDDDDD',add(1,4,1,2))
-
-def to_drob(d_drob):
-    dt = 0
-    pt = 0
-
-    pt, dt = math.modf(d_drob)
-
-    print(dt, pt)
-
-    pt = int(str(pt).split('.')[1])
-    print('to_drob dt, pt', dt, pt)
-    print(len(str(pt)))
-
-    print('1' + '0' * len(str(pt)))
-    n, m = reduce_frac(int(pt), int('1' + '0' * len(str(pt))))
-    result = str(int(dt)) + ' ' + str(n) + '/'+ str(m)
-
-    return result
-
-
-# vir = '1 5/6 + -5 4/7'
-vir = '1/3 + 1/2'
-print(oper(vir))
-
-if oper(vir):
-    drob_a = vir.split(' ' + oper(vir) + ' ')[0].split(' ')
-    drob_b = vir.split(' ' + oper(vir) + ' ')[1].split(' ')
-
-    print(drob_a, oper(vir), drob_b)
-
-    print()
-    print(wo_wh(drob_a))
-    print(wo_wh(drob_b))
-    print()
-
-    print('result', do_that(wo_wh(drob_a), wo_wh(drob_b), oper(vir)))
-
-    summ = (do_that(wo_wh(drob_a), wo_wh(drob_b), oper(vir)))
-
-    print('DROOOOOB', to_drob(summ))
-
-
-
-else:
-    print('Ошибка! Нет арифметического действия.')
-
-# math.modf
-# ['1', '5/6', '+', '4/7']
 
 # Задание-2:
 # Дана ведомость расчета заработной платы (файл "data/workers").
