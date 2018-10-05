@@ -8,118 +8,110 @@
 # Вывод: 1 17/42  (результат обязательно упростить и выделить целую часть)
 # Ввод: -2/3 - -2
 # Вывод: 1 1/3
-
 import math
 import fractions
 
 
-def operation_type(expression):
-    expression = expression.split(' ')
-    for type in expression:
-        if type == '+' or type == '-':  # or type == '*' or type == '/' or type == '**':
+# Определение операции
+def operation_type(vyr):
+    vyr = vyr.split(' ')
+
+    for type in vyr:
+        if type == '+' or type == '-':
             result = ' ' + type + ' '
             break
         else:
             result = False
+
     return result
 
 
-def decomposition(expression):
-    expression = expression.split(operation_type(expression))
+# Разбор вырожения на элементы
+def decomposition(vyr):
+    vyr = vyr.split(operation_type(vyr))
 
-    a_fraction = expression[0].split(' ')
-    b_fraction = expression[1].split(' ')
+    a_fraction = vyr[0].split(' ')
+    b_fraction = vyr[1].split(' ')
 
     return (a_fraction, b_fraction)
 
 
-def solve_it(expression):
-    def is_int(x):
-        try:
-            int(x)
-            return True
-        except ValueError:
-            return False
-
-    def add_null(fraction):
-        while len(fraction) < 2:
-            if is_int(fraction[0]):
-                fraction.append('')
-            else:
-                fraction.insert(0, '')
-        return fraction
-
-    def reduce_frac(n, m):
-        x = math.gcd(n, m)
-        return (n // x, m // x)
-
-    def summ(a, b):
-        summ = a + b
-        return summ
-
-    def razn(a, b):
-        razn = a - b
-        return razn
-
-    def frac_summ(a, b, c, d):
-        x = a * d + b * c
-        y = b * d
-        z = math.gcd(x, y)
-        return (x // z, y // z)
-
-    def frac_razn(a, b, c, d):
-        x = a * d - b * c
-        y = b * d
-        z = math.gcd(x, y)
-        return (x // z, y // z)
-
-    a_fraction, b_fraction = decomposition(expression)
-
-    a_fraction = add_null(a_fraction)
-    b_fraction = add_null(b_fraction)
-
-    print('a_fraction {}, b_fraction {}, syml {}'.format(a_fraction, b_fraction, operation_type(expression)))
-    print(operation_type(expression))
-    dt = [a_fraction[0], b_fraction[0]]
-    pt = [a_fraction[1], b_fraction[1]]
-    if operation_type(expression) == ' + ':
-        # вычисление целой части
-        if is_int(dt[0]) and is_int(dt[1]):
-            dt = summ(int(dt[0]), int(dt[1]))
-        elif is_int(dt[0]):
-            dt = int(dt[0])
-        elif is_int(dt[1]):
-            dt = int(dt[1])
+# Замена пустых значений нулями
+def add_null(fraction):
+    while len(fraction) < 2:
+        if is_int(fraction[0]):
+            fraction.append(0)
         else:
-            dt = 0
+            fraction.insert(0, 0)
+    return fraction
 
-        # вычисление дробной части
-        if a_fraction[1] != '' and b_fraction[1] != '':
-            pt = fractions.Fraction(a_fraction[1]) + fractions.Fraction(b_fraction[1])
-        elif a_fraction[1] == '':
-            pt = b_fraction[1]
-        elif b_fraction[1] == '':
-            pt = a_fraction[1]
+
+# Проверка типа данных
+def is_int(x):
+    try:
+        int(x)
+        return True
+    except ValueError:
+        return False
+
+
+# Приведение дроби к неправильному виду
+def bad_view(fraction):
+    if fraction[1] != 0:
+        if int(fraction[0]) >= 0:
+            n_frac = fractions.Fraction(fraction[1]) + int(fraction[0])
         else:
-            pt = ''
-
-    elif operation_type(expression) == ' - ':
-        dt = razn(int(dt[0]), int(dt[1]))
-
-    if is_int(pt):
-        dt = dt + pt
-        pt = ''
-
-    print('{} {}'.format(dt, pt))
-    return ('{} {}'.format(dt, pt))
+            n_frac = - fractions.Fraction(fraction[1]) + int(fraction[0])
+    else:
+        n_frac = fraction[0]
+    return n_frac
 
 
-#expression = '1 2/3 + 2 1/3'
-expression = '5/6 + 4/7'
+# Приведение дроби к правильному виду
+def true_view(fraction):
+    if is_int(str(fraction)) == False:
+        fraction = str(fraction).split('/')
+        n = int(fraction[0])
+        d = int(fraction[1])
+        x = 0
+        if math.fabs(n) > d:
+            x = n // d
+            x = '{} {}/{}'.format(x, (n - d * x), d)
+        else:
+            x = '{}/{}'.format(n, d)
+    else:
+        x = fraction
+    return x
 
-print(solve_it(expression))
-# print(solve_it(expression))\
+def answer(a_fraction, b_fraction):
+    if operation_type(vyr) == ' + ':
+        answer = true_view(fractions.Fraction(bad_view(a_fraction)) + fractions.Fraction(bad_view(b_fraction)))
+    elif operation_type(vyr) == ' - ':
+        answer = true_view(fractions.Fraction(bad_view(a_fraction)) - fractions.Fraction(bad_view(b_fraction)))
+    return answer
 
+# Исходные данные
+# vyr = '5/6 + 4/7'
+# vyr = '-2/3 - -2'
+vyr = input('Введите выражение: ')
+
+# Разбор вырожения на элементы
+a_fraction, b_fraction = decomposition(vyr)
+
+# Замена пустых значений нулями
+a_fraction = add_null(a_fraction)
+b_fraction = add_null(b_fraction)
+
+# Расчет
+if operation_type(vyr) == ' + ':
+    answer = true_view(fractions.Fraction(bad_view(a_fraction)) + fractions.Fraction(bad_view(b_fraction)))
+elif operation_type(vyr) == ' - ':
+    answer = true_view(fractions.Fraction(bad_view(a_fraction)) - fractions.Fraction(bad_view(b_fraction)))
+
+# Вывод ответа
+print('Ответ: {} = {}'.format(vyr, answer))
+
+print(answer(a_fraction,b_fraction))
 
 # Задание-2:
 # Дана ведомость расчета заработной платы (файл "data/workers").
