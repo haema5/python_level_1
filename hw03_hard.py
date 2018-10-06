@@ -13,26 +13,22 @@ import fractions
 
 
 # Определение операции
-def operation_type(vyr):
-    vyr = vyr.split(' ')
-
-    for type in vyr:
+def operation_type(exp):
+    exp = exp.split(' ')
+    for type in exp:
         if type == '+' or type == '-':
             result = ' ' + type + ' '
             break
         else:
             result = False
-
     return result
 
 
 # Разбор вырожения на элементы
-def decomposition(vyr):
-    vyr = vyr.split(operation_type(vyr))
-
-    a_fraction = vyr[0].split(' ')
-    b_fraction = vyr[1].split(' ')
-
+def decomposition(exp):
+    exp = exp.split(operation_type(exp))
+    a_fraction = exp[0].split(' ')
+    b_fraction = exp[1].split(' ')
     return (a_fraction, b_fraction)
 
 
@@ -69,49 +65,42 @@ def bad_view(fraction):
 
 # Приведение дроби к правильному виду
 def true_view(fraction):
-    if is_int(str(fraction)) == False:
+    if is_int(str(fraction)):
+        x = fraction
+    else:
         fraction = str(fraction).split('/')
         n = int(fraction[0])
         d = int(fraction[1])
-        x = 0
         if math.fabs(n) > d:
             x = n // d
             x = '{} {}/{}'.format(x, (n - d * x), d)
         else:
             x = '{}/{}'.format(n, d)
-    else:
-        x = fraction
     return x
 
-def answer(a_fraction, b_fraction):
-    if operation_type(vyr) == ' + ':
-        answer = true_view(fractions.Fraction(bad_view(a_fraction)) + fractions.Fraction(bad_view(b_fraction)))
-    elif operation_type(vyr) == ' - ':
-        answer = true_view(fractions.Fraction(bad_view(a_fraction)) - fractions.Fraction(bad_view(b_fraction)))
+
+# Расчет
+def answer(exp):
+    # Разбор вырожения на элементы
+    a_fraction, b_fraction = decomposition(exp)
+
+    # Вычисление
+    if operation_type(exp) == ' + ':
+        answer = true_view(
+            fractions.Fraction(bad_view(add_null(a_fraction))) + fractions.Fraction(bad_view(add_null(b_fraction))))
+    elif operation_type(exp) == ' - ':
+        answer = true_view(
+            fractions.Fraction(bad_view(add_null(a_fraction))) - fractions.Fraction(bad_view(add_null(b_fraction))))
     return answer
+
 
 # Исходные данные
 # vyr = '5/6 + 4/7'
 # vyr = '-2/3 - -2'
 vyr = input('Введите выражение: ')
 
-# Разбор вырожения на элементы
-a_fraction, b_fraction = decomposition(vyr)
-
-# Замена пустых значений нулями
-a_fraction = add_null(a_fraction)
-b_fraction = add_null(b_fraction)
-
-# Расчет
-if operation_type(vyr) == ' + ':
-    answer = true_view(fractions.Fraction(bad_view(a_fraction)) + fractions.Fraction(bad_view(b_fraction)))
-elif operation_type(vyr) == ' - ':
-    answer = true_view(fractions.Fraction(bad_view(a_fraction)) - fractions.Fraction(bad_view(b_fraction)))
-
 # Вывод ответа
-print('Ответ: {} = {}'.format(vyr, answer))
-
-print(answer(a_fraction,b_fraction))
+print('Ответ: {} = {}'.format(vyr, answer(vyr)))
 
 # Задание-2:
 # Дана ведомость расчета заработной платы (файл "data/workers").
