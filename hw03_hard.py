@@ -8,6 +8,9 @@
 # Вывод: 1 17/42  (результат обязательно упростить и выделить целую часть)
 # Ввод: -2/3 - -2
 # Вывод: 1 1/3
+print()
+print('Задание-1:')
+
 import math
 import fractions
 
@@ -109,7 +112,44 @@ print('Ответ: {} = {}'.format(vyr, answer(vyr)))
 # то их ЗП уменьшается пропорционально, а за заждый час переработки
 # они получают удвоенную ЗП, пропорциональную норме.
 # Кол-во часов, которые были отработаны, указаны в файле "data/hours_of"
+print()
+print('Задание-2:')
 
+from os import path
+
+# Чтение файла
+def read_file(f_path, f_name):
+    f_path = path.join(f_path, f_name)
+    f = open(f_path, 'r', encoding='UTF-8')
+    f_lines = f.readlines()
+    f.close()
+    return f_lines
+
+# Очистка списка
+def list_format(l_names):
+    i = 0
+    while i < len(l_names):
+        l_names[i] = l_names[i].rstrip('\n')
+        l_names[i] = list(filter(len, l_names[i].split(' ')))
+        i += 1
+    l_names.pop(0)
+    return l_names
+
+# Читаем исходные данные
+workers = list_format(read_file('data', 'workers.txt'))
+hours_of = list_format(read_file('data', 'hours_of.txt'))
+
+# Считаем и выводим результат
+print('Имя Фамилия     Зарплата')
+
+for hour in hours_of:
+    for worker in workers:
+        if worker[0] == hour[0] and worker[1] == hour[1]:
+            if int(hour[2]) < int(worker[4]):
+                x = int(worker[2]) * int(hour[2]) / int(worker[4])
+            else:
+                x = ((int(worker[2]) * int(hour[2]) / int(worker[4])) - int(worker[2])) * 2 + int(worker[2])
+            print('{} {}     {}'.format(worker[0], worker[1], x))
 
 # Задание-3:
 # Дан файл ("data/fruits") со списком фруктов.
@@ -123,3 +163,34 @@ print('Ответ: {} = {}'.format(vyr, answer(vyr)))
 # Подсказка:
 # Чтобы получить список больших букв русского алфавита:
 # print(list(map(chr, range(ord('А'), ord('Я')+1))))
+print()
+print('Задание-3:')
+
+from os import path
+
+
+def filling(content):
+    def make_files(file, string):
+        file = path.join('data', 'fruits_' + file + '.txt')
+        f = open(file, "a")
+        f.write(string)
+        f.close()
+
+    alphabet = (list(map(chr, range(ord('А'), ord('Я') + 1))))
+    for letter in alphabet:
+        for item in content:
+            if item[0] == letter:
+                make_files(letter, item)
+
+
+f_name = 'fruits.txt'
+f_path = path.join('data', f_name)
+f = open(f_path, 'r', encoding='UTF-8')
+file_lines = f.readlines()
+f.close()
+
+try:
+    filling(file_lines)
+    print('Все фрукты из файла <{}> разложены по отдельным файлам.'.format(f_path))
+except:
+    print('Ошибка!')
