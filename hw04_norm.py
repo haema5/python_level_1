@@ -83,16 +83,37 @@ print('С использованием re:\n', findall(regex, line_2))
 # Найдите и выведите самую длинную последовательность одинаковых цифр
 # в вышезаполненном файле.
 
-import random
+from random import randrange
+from os import path
 
 print()
 print('Задание-3:')
 
-i = 0
-line_3 = ''
-while i < 2500:
-    line_3 = line_3 + str(random.randrange(0, 9))
-    i += 1
+
+def read_file():
+    def make_files():
+        file = path.join('data', 'numbers.txt')
+        f = open(file, "a")
+
+        i = 0
+        numbers = ''
+        while i < 2500:
+            numbers = numbers + str(randrange(0, 9))
+            i += 1
+
+        f.write(numbers)
+        f.close()
+
+    make_files()
+    f_path = path.join('data', 'numbers.txt')
+    f = open(f_path, 'r', encoding='UTF-8')
+    f_lines = f.readlines()
+    f.close()
+    f_lines = str(f_lines[0])
+    return f_lines
+
+
+line_3 = read_file()
 
 count = 0
 max_count = 0
@@ -109,4 +130,4 @@ while i < len(line_3) - 1:
     i += 1
 
 posled = line_3[index - max_count:index + 1]
-print('Самая длинная последовательность одинаковых цифр <{}> состоит из {} цифр.'.format(posled, len(posled)))
+print('Самая длинная последовательность одинаковых цифр: <{}>.'.format(posled, len(posled)))
