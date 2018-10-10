@@ -52,17 +52,17 @@ print('Задание-3:')
 
 x = []
 y = []
-n = 0
+fig = 0
 answer = True
 
-while n < 8:
-    new_x, new_y = [int(s) for s in input('Введите координаты фигуры №{}:'.format(n + 1)).split()]
+while fig < 8:
+    new_x, new_y = [int(s) for s in input('Введите координаты фигуры №{}:'.format(fig + 1)).split()]
     x.append(new_x)
     y.append(new_y)
-    n += 1
+    fig += 1
 
-for i in range(n):
-    for j in range(i + 1, n):
+for i in range(fig):
+    for j in range(i + 1, fig):
         if x[i] == x[j] or y[i] == y[j] or abs(x[i] - x[j]) == abs(y[i] - y[j]):
             answer = False
 
