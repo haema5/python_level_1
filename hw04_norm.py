@@ -33,6 +33,7 @@ print('С использованием re:\n', findall(regex, line))
 lower_items = []
 new_list = []
 razd = ''
+
 for sym in line:
     if sym.islower():
         lower_items.append(sym)
@@ -40,6 +41,10 @@ for sym in line:
         if len(lower_items) > 0:
             new_list.append(razd.join(lower_items))
             lower_items.clear()
+
+new_list.append(razd.join(lower_items))
+lower_items.clear()
+
 print('Без исползования re:\n', new_list)
 
 # Задание-2:
@@ -74,7 +79,25 @@ regex = r'[a-z]{2}([A-Z]+)[A-Z]{2}'
 print('С использованием re:\n', findall(regex, line_2))
 
 # Без исползования re
+upper_line = ''
+answer = []
 
+for i in range(len(line_2) - 1):
+    s1 = str(line_2[i])
+    s2 = str(line_2[i + 1])
+    if s1.islower() and s2.islower():
+        for n in range(i + 2, len(line_2)):
+            if line_2[n].isupper():
+                upper_line = upper_line + str(line_2[n])
+            elif len(upper_line) > 2:
+                answer.append(upper_line[:-2])
+                upper_line = ''
+                break
+            else:
+                upper_line = ''
+                break
+
+print('Без исползования re:\n', answer)
 
 # Задание-3:
 # Напишите скрипт, заполняющий указанный файл (самостоятельно задайте имя файла)
