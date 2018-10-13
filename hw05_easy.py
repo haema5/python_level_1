@@ -1,5 +1,5 @@
 from os import mkdir, rmdir, listdir, remove
-from os.path import exists, isdir
+from os.path import exists, isdir, abspath
 from shutil import copy
 
 # Задача-1:
@@ -9,25 +9,29 @@ from shutil import copy
 print('Задача-1:')
 
 
-def make_dir():
-    for dir_name in range(1, 9):
-        mkdir('./dir_' + str(dir_name))
+def make_dir(dir_name):
+    mkdir(abspath(dir_name))
 
 
-def del_dir():
-    for dir_name in range(1, 9):
-        rmdir('./dir_' + str(dir_name))
+def del_dir(dir_name):
+    rmdir(abspath(dir_name))
 
 
-try:
-    make_dir()
-    print('Создал директории dir_1 - dir_9!')
-except:
-    print('Ошибка! Не смог создать директории.')
-finally:
+for i in range(1, 10):
+    dir_name = 'dir_' + str(i)
     try:
-        del_dir()
-        print('Удалил директории dir_1 - dir_9!')
+        make_dir(dir_name)
+        print('Создал директорию {}!'.format(dir_name))
+    except:
+        print('Ошибка! Не смог создать директории.')
+
+print('\n########\n')
+
+for i in range(1, 10):
+    dir_name = 'dir_' + str(i)
+    try:
+        del_dir(dir_name)
+        print('Удалил директорию {}!'.format(dir_name))
     except:
         print('Ошибка! Не смог удалить директории.')
 
