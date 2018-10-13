@@ -32,11 +32,12 @@ while answer != 'q':
         print('  4 - Создать папку')
         do = int(input('\nЧем могу помочь? '))
         if do == 1:
-            directory = os.path.abspath(input('Введите путь: '))
-            if os.path.exists(directory):
-                print('Успешно перешел в {}!'.format(directory))
-            else:
-                print('Такой директории не существует.')
+            directory = os.path.join(os.getcwd(), input('Введите путь: '))
+            try:
+                os.chdir(directory)
+                print('Успешено перешел в {}'.format(directory))
+            except FileNotFoundError:
+                print('Такой папки не существует')
         elif do == 2:
             print('В директории {} следующие элементы: '.format(directory))
             print([i for i in os.listdir(directory)])
