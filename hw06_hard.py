@@ -22,7 +22,7 @@ class Worker:
         self.norm_hours = int(norm_hours)
         self.work_hours = 0
 
-    def work_hours(self):
+    def read_work_hours(self):
         file = os.path.join('data', 'hours_of.txt')
         with open(file, 'r', encoding='UTF-8') as f:
             for i in f.readlines():
@@ -46,7 +46,7 @@ class Worker:
         else:
             return (self._salary)
 
-    def save_salary(self, salary):
+    def write_salary(self, salary):
         file = os.path.join('data', 'salary_for_all.txt')
         with open(file, 'a', encoding='UTF-8') as file:
             file.write(self.name + ' ' + self.surname + ' - ' + str(salary) + '\n')
@@ -61,9 +61,9 @@ def read_file(file):
             # обработка строки
             name, surname, salary, position, norm_hours = i.split()
             workers = Worker(name, surname, salary, position, norm_hours)
-            workers.work_hours()
+            workers.read_work_hours()
             salary = workers.calc_salary()
-            workers.save_salary(salary)
+            workers.write_salary(salary)
     file.close()
 
 
