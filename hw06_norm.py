@@ -4,54 +4,54 @@
 # У каждого ученика есть два Родителя(мама и папа).
 # Также в школе преподают Учителя. Один учитель может преподавать
 # в неограниченном кол-ве классов свой определенный предмет.
-# Т.е. Учитель Иванов может преподавать математику у 5А и 6Б,
+# Т.е. Учитель Уханов может преподавать математику у 5А и 6Б,
 # но больше математику не может преподавать никто другой.
 
 # Выбранная и заполненная данными структура должна решать следующие задачи:
 # 1. Получить полный список всех классов школы
 # 2. Получить список всех учеников в указанном классе
-#  (каждый ученик отображается в формате "Фамилия И.О.")
+#  (каждый ученик отображается в формате 'Фамилия И.О.')
 # 3. Получить список всех предметов указанного ученика
 #  (Ученик --> Класс --> Учителя --> Предметы)
 # 4. Узнать ФИО родителей указанного ученика
 # 5. Получить список всех Учителей, преподающих в указанном классе
 
-
 class Klass:
-    def __init__(self, class_room):
-        self.class_room = class_room
+    def __init__(self, klass_name):
+        self.klass_name = klass_name
 
-    def get_name(self):
-        return str(self.class_room['class_num']) + ' ' + self.class_room['class_letter']
+    @property
+    def get_klass_name(self):
+        return self.klass_name
 
 
-class Person:
+class Persons:
     def __init__(self, name, surname, father_name):
         self.name = name
         self.surname = surname
         self.father_name = father_name
 
-    def get_full_name(self):
+    def get_fio(self):
         return self.surname + ' ' + self.name[:1] + '.' + self.father_name[:1] + '.'
 
 
-class Student(Person):
-    def __init__(self, name, surname, father_name, class_room, father, mother):
-        Person.__init__(self, name, surname, father_name)
-        self.class_room = class_room
+class Student(Persons):
+    def __init__(self, name, surname, father_name, klass, father, mother):
+        Persons.__init__(self, name, surname, father_name)
+        self.klass = klass
         self.father = father
         self.mother = mother
 
-    def get_class_room(self):
-        return self.class_room
+    def get_klass(self):
+        return self.klass
 
     def get_parents(self):
-        return self.father.get_full_name(), self.mother.get_full_name()
+        return self.father.get_fio(), self.mother.get_fio()
 
 
-class Teacher(Person):
+class Teacher(Persons):
     def __init__(self, name, surname, father_name, classes, subject):
-        Person.__init__(self, name, surname, father_name)
+        Persons.__init__(self, name, surname, father_name)
         self.classes = classes
         self.subject = subject
 
@@ -59,45 +59,53 @@ class Teacher(Person):
         return self.subject
 
     def get_classes(self):
-        return self.classes
+        klass_name = [var for var in self.classes]
+        return klass_name
 
 
-class_rooms = ['5 А', '4 В', '8 Б']
-parents = [Person("Иван", "Сидоров", "Игоревич"),
-           Person("Татьяна", "Сидорова", "Максимовна"),
-           Person("Игорь", "Иванов", "Александрович"),
-           Person("Ирина", "Иванова", "Александровна"),
-           Person("Николай", "Петров", "Александрович"),
-           Person("Светлана", "Петрова", "Николаевна")]
-students = [Student("Александр", "Иванов", "Игоревич", class_rooms[0], parents[2], parents[3]),
-            Student("Петр", "Сидоров", 'Иванович', class_rooms[2], parents[0], parents[1]),
-            Student("Иван", "Петров", 'Николаевич', class_rooms[1], parents[4], parents[5])]
-teachers = [Teacher("Иван", "Сидоров", "Игоревич", [class_rooms[0], class_rooms[1]], 'Математика'),
-            Teacher("Игорь", "Иванов", "Александрович", [class_rooms[2], class_rooms[1]], 'История'),
-            Teacher("Николай", "Петров", "Александрович", [class_rooms[0], class_rooms[2]], 'Английский')]
+klass = [Klass('5 А'),
+         Klass('4 В'),
+         Klass('8 Б')]
+parents = [Persons('Иван', 'Сафронов', 'Игоревич'),
+           Persons('Татьяна', 'Сафронова', 'Максимовна'),
+           Persons('Игорь', 'Уханов', 'Александрович'),
+           Persons('Ирина', 'Уханова', 'Александровна'),
+           Persons('Николай', 'Каунев', 'Александрович'),
+           Persons('Светлана', 'Каунева', 'Николаевна')]
+students = [Student('Александр', 'Уханов', 'Игоревич', klass[0].get_klass_name, parents[2], parents[3]),
+            Student('Петр', 'Сафронов', 'Уханович', klass[2].get_klass_name, parents[0], parents[1]),
+            Student('Иван', 'Каунев', 'Николаевич', klass[1].get_klass_name, parents[4], parents[5])]
+teachers = [Teacher('Иван', 'Сафронов', 'Игоревич', [klass[0].get_klass_name, klass[1].get_klass_name], 'Математика'),
+            Teacher('Игорь', 'Уханов', 'Александрович', [klass[2].get_klass_name, klass[1].get_klass_name], 'История'),
+            Teacher('Николай', 'Каунев', 'Александрович', [klass[0].get_klass_name, klass[2].get_klass_name],
+                    'Английский')]
 
-# Получить полный список всех классов школы
-st = set([val.get_class_room() for val in students])
-print(class_rooms)
-print(st)
+# 1. Получить полный список всех классов школы
+print('Список всех классов:\n', [var.get_klass_name for var in klass])
 
-# Получить список всех учеников в указанном классе(каждый ученик отображается в формате "Фамилия И.О.")
-cl_room = '4 В'
-st_list = [val.get_full_name() for val in students if val.get_class_room() == cl_room]
-print(st_list)
+# 2. Получить список всех учеников в указанном классе
+# klass_name = '4 В'
+klass_name = klass[1].get_klass_name
+print('\nВ классе <{}> учатся:\n'.format(klass_name),
+      [var.get_fio() for var in students if var.get_klass() == klass_name])
 
-# 3. Получить список всех предметов указанного ученика (Ученик --> Класс --> Учителя --> Предметы)
-student = students[0]
-t_list = [val for val in teachers if student.get_class_room() in val.get_classes()]
-t_names = [val.get_full_name for val in t_list]
-subj = [val.subject for val in teachers]
-print(student.get_full_name() + ' --> ' + student.get_class_room() + ' --> ' + ''.join(
-    map(str, t_names)) + '--> ' + ''.join(map(str, subj)))
+# 3. Получить список всех предметов указанного ученика
+#  (Ученик --> Класс --> Учителя --> Предметы)
+# pupil_name = 'Сафронов П.И.'
+pupil_name = students[1]
 
-# 4. Узнать ФИО родителей указанного ученика
-his_parents = student.get_parents()
-print(his_parents)
+print('\nУченик:\n', pupil_name.get_fio())
+print('Класс:\n', pupil_name.get_klass())
+print('Учителя:\n', [var.get_fio() for var in teachers if pupil_name.get_klass() in var.get_classes()])
+print('Предметы:\n', [var.get_subject() for var in teachers if pupil_name.get_klass() in var.get_classes()])
 
-# 5. Получить список всех Учителей, преподающих в указанном классе
-# teach_list = [val.get_full_name for val in teachers if cl_room in val.get_classes]
-# print(teach_list)
+# # 4. Узнать ФИО родителей указанного ученика
+# pupil_name = 'Сафронов П.И.'
+pupil_name = students[1]
+print('\nРодители ученика <{}>:\n'.format(pupil_name.get_fio()), pupil_name.get_parents())
+
+# # 5. Получить список всех Учителей, преподающих в указанном классе
+# klass_name = '4 В'
+klass_name = klass[1].get_klass_name
+print('\nКласс <{}> обучают:\n'.format(klass_name),
+      [var.get_fio() for var in teachers if klass_name in var.get_classes()])
