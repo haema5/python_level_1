@@ -116,8 +116,8 @@ class Card:
         for line in self.card:
             for unit in line:
                 if str(unit).isdigit():
-                    return True
-        return False
+                    return False
+        return True
 
 
 # класс игрового процесса
@@ -155,13 +155,13 @@ class GamePlay:
             if card_2.search_num(number):
                 card_2.rem_num(number)
 
-            if card_1.win_card is False and card_2.win_card is False:
+            if card_1.win_card and card_2.win_card:
                 print('Ничья!')
                 break
-            elif card_1.win_card is False:
+            elif card_1.win_card:
                 print('Выиграл игрок:', self.player_1)
                 break
-            elif card_2.win_card is False:
+            elif card_2.win_card:
                 print('Выиграл игрок:', self.player_2)
                 break
 
