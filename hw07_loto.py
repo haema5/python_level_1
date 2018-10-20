@@ -40,25 +40,42 @@
 # с помощью функции-генератора.
 # Подсказка: для работы с псевдослучайными числами удобно использовать
 # модуль random: http://docs.python.org/3/library/random.html
-#
+
 import random
 
 
-class Create_cards:
+# класс работы с мешком
+class Bag:
     def __init__(self):
-        self.numbers = ()
-        self.card = []
-        self._new_line = []
+        self.casks = list(range(1, 91))
 
-    def new_card(self):\
-        self.numbers = list(range(1, 91))
+    # достаем боченок из мешка
+    @property
+    def pull(self):
+        cask = random.choice(self.casks)
+        var = self.casks.index(cask)
+        del self.casks[var]
+        return cask
+
+
+# класс работы с билетами
+class Card:
+    def __init__(self):
+        self.check_card = ()
+        self._new_line = []
+        self.card = []
+
+    # создаем билет
+    @property
+    def create_card(self):
+        self.check_card = list(range(1, 91))
         for line in range(3):
             for elem in range(5):
-                var = random.choice(self.numbers)
+                var = random.choice(self.check_card)
                 self._new_line.append(var)
-                var = self.numbers.index(var)
-                del self.numbers[var]
-                self._new_line.sort()
+                var = self.check_card.index(var)
+                del self.check_card[var]
+            self._new_line.sort()
             self.card.append(self._new_line[:])
             self._new_line.clear()
         for line in range(len(self.card)):
@@ -66,9 +83,8 @@ class Create_cards:
                 self.card[line].insert(random.randrange(0, len(self.card[line])), ' ')
         return self.card
 
-    # def open_bag(self):
-    #     return self.numbers
-
+    # выводим билет
+    @property
     def print_card(self):
         card = '-' * 23 + '\n'
         for line in range(len(self.card)):
@@ -78,15 +94,79 @@ class Create_cards:
         card = card + '-' * 23
         return card
 
+    # ищем значение в билете
+    def search_num(self, num):
+        for line in self.card:
+            for elem in line:
+                if elem == num:
+                    return True
+        return False
 
-card_1 = Create_cards()
-card_2 = Create_cards()
-# print('one_line', bag.open_bag())
-# print('one_line', len(bag.open_bag()))
-# print('one_new_card', bag.new_card())
-# print('one_line', len(bag.open_bag()))
-print(card_1.new_card())
-print(card_2.new_card())
+    # вычеркиваем значение из билета
+    def rem_num(self, num):
+        for line in range(len(self.card)):
+            for elem in self.card[line]:
+                if elem == num:
+                    elem = self.card[line].index(num)
+                    self.card[line][elem] = 'X'
 
-print(card_1.print_card())
-print(card_2.print_card())
+    # проверяем, остались ли цифры в билете
+    @property
+    def win_card(self):
+        for line in self.card:
+            for unit in line:
+                if str(unit).isdigit():
+                    return True
+        return False
+
+
+# класс игрового процесса
+class GamePlay:
+    def __init__(self, username):
+        self.player_1 = username
+        self.player_2 = 'Computer'
+
+    def play(self):
+        bag = Bag()
+
+        card_1 = Card()
+        card_1.create_card
+
+        card_2 = Card()
+        card_2.create_card
+
+        while len(bag.casks) > 0:
+            number = bag.pull
+            print('Из мешка вынут боченок: {}. В мешке осталось: {}.'.format(number, len(bag.casks)))
+            print('Билет игрока - {}:\n'.format(self.player_1), card_1.print_card)
+            print('Билет игрока - {}:\n'.format(self.player_2), card_2.print_card)
+            answer = input('Введите <y>, чтобы зачеркнуть, иначе игра будет продолжена: ')
+            if answer == 'y':
+                if card_1.search_num(number):
+                    card_1.rem_num(number)
+                else:
+                    print('Номера в карточке не существует, вы проиграли!')
+                    break
+            else:
+                if card_1.search_num(number):
+                    print('Пропущен существующий в карточке номер, вы проиграли!')
+                    break
+
+            if card_2.search_num(number):
+                card_2.rem_num(number)
+
+            if card_1.win_card is False and card_2.win_card is False:
+                print('Ничья!')
+                break
+            elif card_1.win_card is False:
+                print('Выиграл игрок:', self.player_1)
+                break
+            elif card_2.win_card is False:
+                print('Выиграл игрок:', self.player_2)
+                break
+
+
+if __name__ == '__main__':
+    username = input('Введите Ваше имя: ')
+    Game = GamePlay(username)
+    Game.play()
